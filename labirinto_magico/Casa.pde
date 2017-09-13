@@ -1,7 +1,6 @@
 class Casa{
   private int x;
   private int y;
-  private int id;
   private Mago mago;
   private Tesouro tesouro;
   private Parede cima;
@@ -9,10 +8,9 @@ class Casa{
   private Parede esquerda;
   private Parede direita;
   
-  public Casa(int x, int y, int id){
+  public Casa(int x, int y){
     this.x = x;
     this.y = y;
-    this.id = id;
   }
   
   public void addMago(Mago m){
@@ -39,14 +37,14 @@ class Casa{
     return temTesouro;
   }
   
-  public int getId(){
-    return this.id;
-  }
   public int getX(){
     return this.x;
   }
   public int getY(){
     return this.y;
+  }
+  public String getXYasString(){
+    return ""+this.x+","+this.y;
   }
   
   public Parede getParedeDaEsquerda(){
@@ -64,21 +62,16 @@ class Casa{
   
   public void setParedeDaEsquerda(Parede p){
     this.esquerda = p;
-    this.esquerda.addCasa(this);
-    p.setDominante(this);
   }
   public void setParedeDaDireita(Parede p){
     this.direita= p;
-    this.direita.addCasa(this);
+   
   }
   public void setParedeDeCima(Parede p){
     this.cima= p;
-    this.cima.addCasa(this);
-    p.setDominante(this);
   }
   
   public void setParedeDeBaixo(Parede p){
     this.baixo = p;
-    this.baixo.addCasa(this);
   }
 }

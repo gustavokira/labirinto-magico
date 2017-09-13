@@ -3,12 +3,13 @@ import java.util.HashMap;
 Labirinto l;
 
 public void setup(){
- l = new Labirinto(10,5);
-  size(500,500);
+ l = new Labirinto(10,10);
+  size(1000,1000);
+  l.desenhar();
 }
 
 public void draw(){
-  l.desenhar();
+  
 }
 
 

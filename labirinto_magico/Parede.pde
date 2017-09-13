@@ -1,24 +1,26 @@
 //classe que representa uma parede no labirinto.
 class Parede{
+  public final static int VERTICAL = 0;
+  public final static int HORIZONTAL = 1;
   //atributo que define se a parede está ativa ou não.
   private boolean ativa;
-  
-  //atributo para ajudar a desenhar na tela.
-  private Casa dominante;
+  private String id;
+  private int direcao;
   
   //casas que a parede divide.
   private Casa[] casasVizinhas;
   
   public Parede(){
     this.casasVizinhas = new Casa[2];
+    this.ativa = true;
   }
   
-  public void addCasa(Casa c){
-    if(this.casasVizinhas[0] == null){
-      this.casasVizinhas[0] = c;
-    }else{
-      this.casasVizinhas[1] = c;
-    }
+  public void addPrimeiroVizinho(Casa c){
+    this.casasVizinhas[0] = c;
+  }
+  
+  public void addSegundoVizinho(Casa c){
+    this.casasVizinhas[1] = c;
   }
   
   public Casa getPrimeiroVizinho(){
@@ -28,25 +30,49 @@ class Parede{
     return this.casasVizinhas[1];
   }
   
-  public boolean estaNaVertical(){
-    
-      if(
-        this.casasVizinhas[0] != null &&
-        (this.casasVizinhas[0].getParedeDaEsquerda() == this || this.casasVizinhas[0].getParedeDaDireita() == this)
-        ){
-         return true;
-      }
-      
-      if(
-        this.casasVizinhas[1] != null &&
-        (this.casasVizinhas[1].getParedeDaEsquerda() == this || this.casasVizinhas[1].getParedeDaDireita() == this)
-        ){
-         return true;
-      }
-    
-    return false;
+  public String getId(){
+    return this.id;
   }
-   
+  
+  public void defineId(){
+    boolean primeiroHorizontal = false;
+    boolean primeiroVertical = false;
+    boolean ultimoHorizontal = false;
+    boolean ultimoVertical = false;
+    
+    if(this.casasVizinhas[0] == null){
+      if(this.estaNaVertical()){
+        primeiroVertical = true;
+      }else{
+        primeiroHorizontal = true;
+      }
+    }
+    
+    if(this.casasVizinhas[1] == null){
+      if(this.estaNaVertical()){
+        ultimoVertical = true;
+      }else{
+        ultimoHorizontal = true;
+      }
+    }
+    
+    if(primeiroVertical == true){
+      this.id = "-1,"+ this.casasVizinhas[1].getY()+";"+this.casasVizinhas[1].getXYasString();
+    }
+    else if(ultimoVertical == true){
+      this.id = this.casasVizinhas[0].getXYasString()+";"+(this.casasVizinhas[0].getX()+1)+","+ this.casasVizinhas[0].getY();
+    }
+    else if(primeiroHorizontal == true){
+      this.id = this.casasVizinhas[1].getX()+",-1;"+this.casasVizinhas[1].getXYasString();
+    }
+    else if(ultimoHorizontal == true){
+      this.id = this.casasVizinhas[0].getXYasString()+";"+this.casasVizinhas[0].getX()+","+ (this.casasVizinhas[0].getY()+1);
+    }
+    else{
+      this.id = this.casasVizinhas[0].getXYasString()+";"+this.casasVizinhas[1].getXYasString();
+    } 
+  }
+  
   //permite saber se a parede está ativa ou não.
   public boolean estaAtivada(){
     return this.ativa;
@@ -63,10 +89,19 @@ class Parede{
     //muda o atributo ativo do objeto para falso.
     this.ativa = false;
   }
-  public Casa getDominante(){
-    return this.dominante;
+  
+  public void colocarNaHorizontal(){
+    this.direcao = Parede.HORIZONTAL;
   }
-  public void setDominante(Casa c){
-    this.dominante = c;
+  public void colocarNaVertical(){
+    this.direcao = Parede.VERTICAL;
+  }
+  
+  public boolean estaNaVertical(){
+    if(this.direcao == Parede.VERTICAL){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
