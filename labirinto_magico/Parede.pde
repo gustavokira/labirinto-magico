@@ -12,7 +12,7 @@ class Parede{
   
   public Parede(){
     this.casasVizinhas = new Casa[2];
-    this.ativa = true;
+    this.ativa = false;
   }
   
   public void addPrimeiroVizinho(Casa c){

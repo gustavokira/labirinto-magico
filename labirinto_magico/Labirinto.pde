@@ -6,12 +6,16 @@ class Labirinto{
   private int altura;
   private Casa[][] casas;
   private HashMap<String,Parede> paredes;
+  private ArquiteturaDoLabirinto arquitetura;
+  private ArrayList<Mago> magos;
   
-  public Labirinto(int l, int a){
+  public Labirinto(int l, int a, ArquiteturaDoLabirinto arq){
     this.largura = l;
     this.altura = a;
     this.casas = new Casa[this.largura][this.altura];
     this.paredes = new HashMap<String,Parede>();
+    this.arquitetura = arq;
+    this.magos = new ArrayList<Mago>();
     
     for(int i =0;i<this.largura;i++){
       for(int j =0;j<this.altura;j++){
@@ -74,7 +78,6 @@ class Labirinto{
           Parede cima = c.getParedeDeCima();
           Parede baixo = c.getParedeDeBaixo();
           
-       
           esquerda.defineId();
           direita.defineId();
           cima.defineId();
@@ -86,6 +89,16 @@ class Labirinto{
           this.paredes.put(baixo.getId(),baixo);
       }
     }
+    
+    ArrayList<String> ids = this.arquitetura.getAllIds();
+    for(int i =0;i<ids.size();i++){
+      String id = ids.get(i);
+      this.paredes.get(id).ativar();
+    }
+  }
+  
+  public void addMago(Mago m){
+    this.magos.add(m);
   }
   
   public void desenhar(){
@@ -100,6 +113,12 @@ class Labirinto{
         rect(offSetX+c.getX()*lado, offSetY+c.getY()*lado, lado, lado);
       }
     }
+    
+    for(int i =0;i<this.magos.size();i++){
+      Mago m = this.magos.get(i);
+      rect(offSetX+m.getX()*lado, offSetY+m.getY()*lado-10, lado-10, lado-10);
+    }
+    
     for(Map.Entry<String, Parede> entry: this.paredes.entrySet()) {
         Parede p = entry.getValue();
         
@@ -135,19 +154,7 @@ class Labirinto{
         }
         rect(x, y, larguraParede, alturaParede);
         
-          if(p.getPrimeiroVizinho() != null){
-        print(0,p.getPrimeiroVizinho().x,p.getPrimeiroVizinho().y);
-        print(" - ");
-      }
-      
-      if(p.getSegundoVizinho() != null){
-        print(1,p.getSegundoVizinho().x,p.getSegundoVizinho().y);
-        print(" --- ");
-      }
-      print(c.getX(),c.getY(),"-x-",x,y);
-      println("");
-      println(p.getId());
-      println("--------");
+          
       }
   }
 }
