@@ -1,10 +1,10 @@
 class Movimento{
   
-  public final int PARADO =0;
-  public final int CIMA =1;
-  public final int BAIXO =2;
-  public final int ESQUERDA =3;
-  public final int DIREITA =4;
+  public static final int PARADO =0;
+  public static final int CIMA =1;
+  public static final int BAIXO =2;
+  public static final int ESQUERDA =3;
+  public static final int DIREITA =4;
   
   private int tipo;
   

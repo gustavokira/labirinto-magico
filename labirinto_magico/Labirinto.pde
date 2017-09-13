@@ -97,6 +97,14 @@ class Labirinto{
     }
   }
   
+  public int getLargura(){
+    return this.largura;
+  }
+  
+  public int getAltura(){
+    return this.altura;
+  }
+  
   public void addMago(Mago m){
     this.magos.add(m);
   }
@@ -109,14 +117,15 @@ class Labirinto{
       for(int j =0;j<this.altura;j++){
         Casa c = this.casas[i][j];
         noStroke();
-        fill(255,255,255,200);
+        fill(255,255,255);
         rect(offSetX+c.getX()*lado, offSetY+c.getY()*lado, lado, lado);
       }
     }
     
     for(int i =0;i<this.magos.size();i++){
       Mago m = this.magos.get(i);
-      rect(offSetX+m.getX()*lado, offSetY+m.getY()*lado-10, lado-10, lado-10);
+      fill(0,0,0);
+      rect(offSetX+m.getX()*lado, offSetY+m.getY()*lado, lado-10, lado-10);
     }
     
     for(Map.Entry<String, Parede> entry: this.paredes.entrySet()) {
