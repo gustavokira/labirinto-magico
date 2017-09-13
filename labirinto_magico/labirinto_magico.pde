@@ -1,12 +1,14 @@
 import java.util.HashMap;
 
+Labirinto l;
 
 public void setup(){
- Labirinto l = new Labirinto(10,5);
-  
+ l = new Labirinto(10,5);
+  size(500,500);
 }
 
 public void draw(){
+  l.desenhar();
 }
 
 

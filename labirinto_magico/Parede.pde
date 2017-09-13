@@ -3,38 +3,50 @@ class Parede{
   //atributo que define se a parede está ativa ou não.
   private boolean ativa;
   
-  //ids das casas que a parede divide.
-  private int[] idsDasCasasVizinhas;
+  //atributo para ajudar a desenhar na tela.
+  private Casa dominante;
   
-  //ao criar um objeto do tipo parede é obrigatório passar dois ints que representam os ids das casas que a parede divide.
-  public Parede(int id1, int id2){
-    //instancia o array.
-    this.idsDasCasasVizinhas = new int[2];
-    //coloca no primeiro espaço o valor de id1. 
-    this.idsDasCasasVizinhas[0] = id1;
-    //coloca no primeiro espaço o valor de id2.
-    this.idsDasCasasVizinhas[1] = id2;
+  //casas que a parede divide.
+  private Casa[] casasVizinhas;
+  
+  public Parede(){
+    this.casasVizinhas = new Casa[2];
   }
   
-  //retorna os ids das casas vizinhas.
-  public int[] getIdsDasCasasVizinhas(){
-    return this.idsDasCasasVizinhas;
-  }
-    
-  //retorna um identificador único para a parede baseada nas casas que ela divide.
-  public String getIdUnico(){
-    //cria uma variável String para guardar o id temporariamente.
-    String idUnico = "";
-    
-    //
-    if(this.idsDasCasasVizinhas[0] > this.idsDasCasasVizinhas[1]){
-      idUnico = this.idsDasCasasVizinhas[1]+","+this.idsDasCasasVizinhas[0];
+  public void addCasa(Casa c){
+    if(this.casasVizinhas[0] == null){
+      this.casasVizinhas[0] = c;
     }else{
-      idUnico = this.idsDasCasasVizinhas[0]+","+this.idsDasCasasVizinhas[1];
+      this.casasVizinhas[1] = c;
     }
-    return idUnico;
   }
   
+  public Casa getPrimeiroVizinho(){
+    return this.casasVizinhas[0];
+  }
+  public Casa getSegundoVizinho(){
+    return this.casasVizinhas[1];
+  }
+  
+  public boolean estaNaVertical(){
+    
+      if(
+        this.casasVizinhas[0] != null &&
+        (this.casasVizinhas[0].getParedeDaEsquerda() == this || this.casasVizinhas[0].getParedeDaDireita() == this)
+        ){
+         return true;
+      }
+      
+      if(
+        this.casasVizinhas[1] != null &&
+        (this.casasVizinhas[1].getParedeDaEsquerda() == this || this.casasVizinhas[1].getParedeDaDireita() == this)
+        ){
+         return true;
+      }
+    
+    return false;
+  }
+   
   //permite saber se a parede está ativa ou não.
   public boolean estaAtivada(){
     return this.ativa;
@@ -50,5 +62,11 @@ class Parede{
   public void desativar(){
     //muda o atributo ativo do objeto para falso.
     this.ativa = false;
+  }
+  public Casa getDominante(){
+    return this.dominante;
+  }
+  public void setDominante(Casa c){
+    this.dominante = c;
   }
 }
