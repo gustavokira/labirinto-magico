@@ -1,0 +1,6 @@
+class Tesouro{
+  
+  public Tesouro(){
+    
+  }
+}
